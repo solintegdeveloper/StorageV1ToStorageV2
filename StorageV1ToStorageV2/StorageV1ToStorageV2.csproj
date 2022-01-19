@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Protos\login.proto" />
+	  <None Remove="Protos\storage.proto" />
+	</ItemGroup>
+
+	<ItemGroup>
+
+		
+		<PackageReference Include="CommandLineParser" Version="2.8.0" />
+		<PackageReference Include="Dapper" Version="2.0.90" />
+		<PackageReference Include="Google.Protobuf" Version="3.19.0" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.40.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.41.1">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="3.0.1" />
+		<PackageReference Include="ShellProgressBar" Version="5.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Protobuf Include="Protos\login.proto" GrpcServices="Client" />
+	  <Protobuf Include="Protos\storage.proto" GrpcServices="Client" />
+	</ItemGroup>
+
+</Project>

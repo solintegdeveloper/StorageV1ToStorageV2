@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+option csharp_namespace = "Storage.V2.Services.Grpc";
+
+service StorageV2{
+	rpc ListContainers(EmptyRequest) returns (stream ContainerResponse);
+	rpc GetContainer(ContainerRequest) returns (ContainerResponse);
+	rpc CreateContainer(ContainerRequest) returns (CreateContainerResponse);
+	rpc ListBlobs(Container) returns (stream Blob);
+	rpc GetBlob(BlobRequest) returns (BlobResponse);
+	rpc CreateBlob(BlobRequest) returns (BlobResponse);
+	rpc SendBlobData(stream BlobData) returns (stream BlobDataResponse);
+	rpc GetBlobData(stream BlobDataResponse) returns (stream BlobData);
+	rpc TestStream(stream TestRequest) returns (stream TestRequest);
+}
+
+
+message RequestResultResponse {
+	bool status=1;
+	string message=2;
+}
+
+message TestRequest {
+	string dateMark=1;
+}
+
+message EmptyRequest {
+
+}
+
+message ContainerRequest {
+	string name=1;
+}
+
+message Container {
+	string name=1;
+	
+}
+
+message ContainerResponse{
+	Container container=1;
+	RequestResultResponse response=2;
+}
+
+
+
+message BlobRequest{
+	string container=1;
+	string name = 2;
+}
+
+message CreateContainerResponse {
+	RequestResultResponse response=1;
+	Container container=2;
+}
+
+message CreateBlobRequest {
+	string name=1;
+	int32 accountId=2;
+	int32 containerId=3;
+}
+
+
+message Blob {
+	string name=1;
+	int64 length=2;
+	int32 accountId=3;
+	int32 containerId=4;
+	int32 blobId =5;
+	bool exist=6;
+}
+
+message BlobResponse{
+	RequestResultResponse response=1;
+	Blob blob=2;
+}
+
+message BlobData {
+	int32 blobBlockId=1;
+	int32 blobBlocksCount=2;
+	int32 accountId=3;
+	int32 containerId=4;
+	int32 blobId=5;
+	bytes data=6;
+}
+
+message BlobDataResponse {
+	int32 blobBlockId=1;
+	int32 blobBlocksCount=2;
+	int32 accountId=3;
+	int32 containerId=4;
+	int32 blobId=5;
+	bool status=6;
+	string reason=7;
+	string hash=8;
+}

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "Storage.V2.Services.Grpc";
+
+
+service Login{
+	rpc LogIn(LogInRequest) returns (LogInRepply);
+}
+
+message LogInRequest {
+	string user=1;
+	string password=2;
+	string catalog=3;
+}
+
+message LogInRepply {
+	bool isOk=1;
+	string token=2;
+}
