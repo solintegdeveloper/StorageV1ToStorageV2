@@ -11,7 +11,7 @@ namespace StorageV1ToStorageV2
 {
     public static class StorageV2GrpcClientHelper
     {
-        public static async Task<Tuple<Storage.V2.Services.Grpc.StorageV2.StorageV2Client, Metadata>> GetStorageV2Client(string server, SqlConnection db, string codigoEmpresa)
+        public static async Task<Tuple<Storage.V2.Services.Grpc.StorageV2.StorageV2Client, Metadata>> GetStorageV2Client(string server, SqlConnection db, string codigoEmpresa, string databaseInstance)
         {
             using var channel = GrpcChannel.ForAddress($"http://{server}:5100");
             var loginClient = new Storage.V2.Services.Grpc.Login.LoginClient(channel);
@@ -21,6 +21,7 @@ namespace StorageV1ToStorageV2
                 Catalog = db.Database,
                 Password = loginData.Pwd,
                 User = loginData.User,
+                Server = databaseInstance
             });
             //options.HttpClient?.DefaultRequestHeaders.Add("Authorization", $"Bearer {logInRepply.Token}");
             var channelV2 = GrpcChannel.ForAddress($"http://{server}:5100");

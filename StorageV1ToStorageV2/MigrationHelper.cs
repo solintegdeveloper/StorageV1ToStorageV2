@@ -81,7 +81,7 @@ namespace StorageV1ToStorageV2
                 FROM DocumentService_Folders WHERE EmpCod = @codigoEmpresa ORDER BY FechaCreacion DESC", new { codigoEmpresa });
                 using var empresaPbar = empresasPbar.Spawn(numeroCarpetasEstimadas, "Migrando Carpetas de Transacciones", ChildOptions);
                 var serverName = await automatizerDb.ExecuteScalarAsync<string>("select SERVERPROPERTY('MachineName')");
-                var (clientV2, metadada) = await StorageV2GrpcClientHelper.GetStorageV2Client(serverName, automatizerDb, codigoEmpresa);
+                var (clientV2, metadada) = await StorageV2GrpcClientHelper.GetStorageV2Client(serverName, automatizerDb, codigoEmpresa, server);
 
                 //Creamos indice no existente y necesario para buscar archivo por nombre
                 await blobsV1Db.TryExecute(@$"
